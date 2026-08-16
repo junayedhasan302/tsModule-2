@@ -1,0 +1,377 @@
+/**
+ * ============================================================
+ * TypeScript — Last Day Learning Summary
+ * ============================================================
+ *
+ * 1. Type Alias / Custom Type
+ *    `type` keyword ব্যবহার করে নিজের custom type তৈরি করা যায়।
+ *
+ * 2. Object Type
+ *    Object-এর property এবং তাদের type define করা যায়।
+ *
+ * 3. Optional Property
+ *    `?` ব্যবহার করে কোনো property optional করা যায়।
+ *
+ * 4. Union Type
+ *    `|` ব্যবহার করে একাধিক possible type/value define করা যায়।
+ *
+ * 5. Interface
+ *    Object-এর structure বা contract define করার জন্য ব্যবহার করা হয়।
+ *
+ * 6. Interface Extends
+ *    একটি interface-এর property অন্য interface-এ নেওয়ার জন্য `extends`
+ *    ব্যবহার করা হয়।
+ *
+ * 7. Type vs Interface
+ *    দুটোই object structure define করতে পারে।
+ *    `type` union, tuple, primitive alias ইত্যাদির জন্য বেশি flexible।
+ *    `interface` object structure এবং inheritance-এর জন্য বেশি ব্যবহৃত হয়।
+ *
+ * 8. Function Type
+ *    Function-এর parameter এবং return type define করা যায়।
+ *
+ * 9. Generics
+ *    একই code বিভিন্ন data type-এর সাথে reusable এবং type-safe
+ *    ভাবে ব্যবহার করা যায়।
+ *
+ * 10. Generic Type
+ *     Type-এর সাথে generic ব্যবহার করে reusable structure তৈরি করা যায়।
+ *
+ * 11. Generic Interface
+ *     Interface-কে বিভিন্ন data type-এর সাথে reusable করা যায়।
+ *
+ * 12. Generic Constraint
+ *     Generic-এর type-এর উপর restriction দেওয়ার জন্য `extends`
+ *     ব্যবহার করা হয়।
+ *
+ * 13. Enum
+ *     Related fixed এবং named values-এর একটি set তৈরি করা যায়।
+ *
+ * 14. as const
+ *     Value-এর literal type ধরে রাখে এবং object/array-এর value-কে
+ *     readonly করে।
+ *
+ * ============================================================
+ */
+
+// ============================================================
+// 1. TYPE ALIAS / CUSTOM TYPE
+// ============================================================
+
+type StudentName = string;
+type StudentId = number;
+
+const studentName: StudentName = "Junayed";
+const studentId: StudentId = 46;
+
+console.log("1. Type Alias:", studentName, studentId);
+
+
+// ============================================================
+// 2. OBJECT TYPE
+// ============================================================
+
+type Student = {
+  name: string;
+  id: number;
+  department: string;
+  gpa: number;
+};
+
+const student: Student = {
+  name: "Junayed",
+  id: 46,
+  department: "CSE",
+  gpa: 3.6
+};
+
+console.log("2. Object Type:", student);
+
+
+// ============================================================
+// 3. OPTIONAL PROPERTY
+// ============================================================
+
+type User = {
+  name: string;
+  age: number;
+  email?: string;
+};
+
+const user: User = {
+  name: "Rafi",
+  age: 22
+};
+
+console.log("3. Optional Property:", user);
+
+
+// ============================================================
+// 4. UNION TYPE
+// ============================================================
+
+type ID = string | number;
+
+let userId: ID = 46;
+
+console.log("4. Union Type:", userId);
+
+userId = "CSE-46";
+
+console.log("4. Union Type:", userId);
+
+
+// ============================================================
+// 5. INTERFACE
+// ============================================================
+
+interface StudentInfo {
+  name: string;
+  id: number;
+  department: string;
+}
+
+const studentInfo: StudentInfo = {
+  name: "Junayed",
+  id: 46,
+  department: "CSE"
+};
+
+console.log("5. Interface:", studentInfo);
+
+
+// ============================================================
+// 6. INTERFACE EXTENDS
+// ============================================================
+
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface StudentProfile extends Person {
+  studentId: number;
+  department: string;
+}
+
+const profile: StudentProfile = {
+  name: "Junayed",
+  age: 22,
+  studentId: 46,
+  department: "CSE"
+};
+
+console.log("6. Interface Extends:", profile);
+
+
+// ============================================================
+// 7. TYPE VS INTERFACE
+// ============================================================
+
+type StudentType = {
+  name: string;
+  id: number;
+};
+
+interface StudentInterface {
+  name: string;
+  id: number;
+}
+
+const typeStudent: StudentType = {
+  name: "Rafi",
+  id: 101
+};
+
+const interfaceStudent: StudentInterface = {
+  name: "Sakib",
+  id: 102
+};
+
+console.log("7. Type:", typeStudent);
+console.log("7. Interface:", interfaceStudent);
+
+
+// ============================================================
+// 8. FUNCTION TYPE
+// ============================================================
+
+type Add = (a: number, b: number) => number;
+
+const add: Add = (a, b) => {
+  return a + b;
+};
+
+const sum = add(10, 20);
+
+console.log("8. Function Type:", sum);
+
+
+// ============================================================
+// 9. GENERICS
+// ============================================================
+
+function identity<T>(value: T): T {
+  return value;
+}
+
+const stringValue = identity("Junayed");
+const numberValue = identity(46);
+const booleanValue = identity(true);
+
+console.log("9. Generic String:", stringValue);
+console.log("9. Generic Number:", numberValue);
+console.log("9. Generic Boolean:", booleanValue);
+
+
+// ============================================================
+// 10. GENERIC TYPE
+// ============================================================
+
+type Box<T> = {
+  value: T;
+};
+
+const numberBox: Box<number> = {
+  value: 100
+};
+
+const stringBox: Box<string> = {
+  value: "Hello"
+};
+
+console.log("10. Generic Type:", numberBox);
+console.log("10. Generic Type:", stringBox);
+
+
+// ============================================================
+// 11. GENERIC INTERFACE
+// ============================================================
+
+interface ApiResponse<T> {
+  data: T;
+  success: boolean;
+  message: string;
+}
+
+interface StudentData {
+  name: string;
+  id: number;
+}
+
+const response: ApiResponse<StudentData> = {
+  data: {
+    name: "Junayed",
+    id: 46
+  },
+  success: true,
+  message: "Student found"
+};
+
+console.log("11. Generic Interface:", response);
+
+
+// ============================================================
+// 12. GENERIC CONSTRAINT
+// ============================================================
+
+function getLength<T extends { length: number }>(
+  value: T
+): number {
+  return value.length;
+}
+
+const textLength = getLength("Junayed");
+const arrayLength = getLength([10, 20, 30]);
+
+console.log("12. Generic Constraint:", textLength);
+console.log("12. Generic Constraint:", arrayLength);
+
+
+// ============================================================
+// 13. ENUM
+// ============================================================
+
+enum Gender {
+  Male = "male",
+  Female = "female",
+  Other = "other"
+}
+
+const gender: Gender = Gender.Male;
+
+console.log("13. Enum:", gender);
+
+
+// ============================================================
+// 14. ENUM + INTERFACE
+// ============================================================
+
+enum Department {
+  CSE = "CSE",
+  EEE = "EEE",
+  BBA = "BBA"
+}
+
+interface CollegeStudent {
+  name: string;
+  department: Department;
+}
+
+const collegeStudent: CollegeStudent = {
+  name: "Junayed",
+  department: Department.CSE
+};
+
+console.log("14. Enum + Interface:", collegeStudent);
+
+
+// ============================================================
+// 15. AS CONST
+// ============================================================
+
+const roles = {
+  ADMIN: "admin",
+  USER: "user",
+  MODERATOR: "moderator"
+} as const;
+
+console.log("15. as const:", roles.ADMIN);
+
+
+// ============================================================
+// 16. AS CONST + LITERAL UNION
+// ============================================================
+
+const colors = [
+  "red",
+  "green",
+  "blue"
+] as const;
+
+type Color = typeof colors[number];
+
+const selectedColor: Color = "green";
+
+console.log("16. Literal Union:", selectedColor);
+
+
+// ============================================================
+// FINAL OUTPUT SUMMARY
+// ============================================================
+
+console.log("\n========== FINAL SUMMARY ==========");
+
+console.log("Type Alias      → Custom Type");
+console.log("Object Type     → Object Structure");
+console.log("Optional (?)     → Optional Property");
+console.log("Union (|)        → Multiple Possible Types");
+console.log("Interface        → Object Contract");
+console.log("Extends          → Interface Inheritance");
+console.log("Function Type    → Function Structure");
+console.log("Generics         → Reusable Type-Safe Code");
+console.log("Generic Type     → Reusable Type Structure");
+console.log("Generic Interface→ Reusable Interface");
+console.log("Generic Constraint → Restricted Generic");
+console.log("Enum             → Fixed Named Values");
+console.log("as const         → Literal + Readonly");
